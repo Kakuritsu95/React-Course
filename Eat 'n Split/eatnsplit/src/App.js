@@ -46,6 +46,7 @@ export default function App() {
         <SplitBillForm
           selectedFriend={selectedFriend}
           onSetFriendListBill={setFriendList}
+          onSetSelectedFriend={setSelectedFriend}
         ></SplitBillForm>
       )}
     </div>

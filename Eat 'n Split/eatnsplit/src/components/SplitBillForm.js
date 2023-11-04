@@ -1,5 +1,9 @@
 import { useState } from "react";
-export default function SplitBillForm({ selectedFriend, onSetFriendListBill }) {
+export default function SplitBillForm({
+  selectedFriend,
+  onSetFriendListBill,
+  onSetSelectedFriend,
+}) {
   const [inputs, setInputs] = useState({
     billValue: 0,
     expense: 0,
@@ -9,7 +13,7 @@ export default function SplitBillForm({ selectedFriend, onSetFriendListBill }) {
     onSetFriendListBill((friendList) => {
       return friendList.map((friend) => {
         return friend.id === selectedFriend.id
-          ? { ...friend, balance: (friend.balance += balance) }
+          ? { ...friend, balance: (friend.balance = friend.balance + balance) }
           : friend;
       });
     });
@@ -18,11 +22,13 @@ export default function SplitBillForm({ selectedFriend, onSetFriendListBill }) {
     setInputs((inputs) => {
       return { ...inputs, [input]: value };
     });
+    console.log(balance);
+    console.log(inputs);
   }
   const balance =
     inputs.paidOne === "You"
       ? inputs.billValue / 2 - inputs.expense
-      : inputs.expense - inputs.billValue;
+      : inputs.expense - inputs.billValue / 2;
   return (
     <div className="form-split-bill">
       <form>
@@ -69,6 +75,7 @@ export default function SplitBillForm({ selectedFriend, onSetFriendListBill }) {
             onClick={(e) => {
               e.preventDefault();
               handleSplitBill();
+              onSetSelectedFriend("");
             }}
           >
             Split Bill

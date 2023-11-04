@@ -1,5 +1,6 @@
 import { useState } from "react";
 export default function AddFriendForm({ onAddFriend }) {
+  const [toggleAddFriend, setToggleAddFriend] = useState(false);
   const [newFriendName, setNewFriendName] = useState("");
   const [newFriendImage, setNewFriendImage] = useState(
     "https://i.pravatar.cc/48?u=118836"
@@ -14,9 +15,9 @@ export default function AddFriendForm({ onAddFriend }) {
       balance: 0,
     });
     setNewFriendName("");
-    setNewFriendImage("");
+    setNewFriendImage("https://i.pravatar.cc/48?u=118836");
+    setToggleAddFriend((toggleAddFriend) => !toggleAddFriend);
   }
-  const [toggleAddFriend, setToggleAddFriend] = useState(false);
   return (
     <>
       {toggleAddFriend ? (
