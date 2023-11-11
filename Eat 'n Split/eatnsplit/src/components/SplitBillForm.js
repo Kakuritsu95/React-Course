@@ -22,13 +22,11 @@ export default function SplitBillForm({
     setInputs((inputs) => {
       return { ...inputs, [input]: value };
     });
-    console.log(balance);
-    console.log(inputs);
   }
   const balance =
     inputs.paidOne === "You"
-      ? inputs.billValue / 2 - inputs.expense
-      : inputs.expense - inputs.billValue / 2;
+      ? inputs.billValue - inputs.expense
+      : -inputs.expense;
   return (
     <div className="form-split-bill">
       <form>
