@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { KEY } from "./KEY";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -23,7 +23,7 @@ const tempMovieData = [
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
   },
 ];
-const KEY = "7a522751";
+
 const tempWatchedData = [
   {
     imdbID: "tt1375666",
