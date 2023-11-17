@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const tempMovieData = [
   {
@@ -23,7 +23,7 @@ const tempMovieData = [
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
   },
 ];
-
+const KEY = "7a522751";
 const tempWatchedData = [
   {
     imdbID: "tt1375666",
@@ -51,18 +51,76 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [query, setQuery] = useState("conjuring");
+  const [isLoading, setIsLoading] = useState(false);
+  const [err, setError] = useState("");
+  // useEffect(() => {
+  //   try {
+  //     async function FetchDataFromAPI() {
+  //       setIsLoading(true);
+  //       setError("");
+  //       const res = await fetch(
+  //         `https://www.omdbapi.com/?s=${query}&apikey=${KEY}`
+  //       );
+  //       const data = await res.json();
+  //       if (data.Response === "False") {
+  //         throw new Error("Couldnt find any match for your search");
+  //       }
+  //       setMovies(data.Search);
+  //       console.log(data.Search);
+  //       if (query.length < 3) return;
+  //       setIsLoading(false);
+  //     }
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  //   // FetchDataFromAPI();
+  // }, [query]);
+  useEffect(() => {
+    async function FetchDataFromAPI() {
+      try {
+        setIsLoading(true);
+        setError("");
+        const res = await fetch(
+          `https://www.omdbapi.com/?s=${query}&apikey=${KEY}`
+        );
+
+        // if (!res.ok) throw new Error("Sod");
+
+        const data = await res.json();
+        if (data.Response === "False") throw new Error("Didnt find any movies");
+        setMovies(data.Search);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    if (query.length < 3) {
+      setMovies([]);
+      setError("");
+      return;
+    }
+    FetchDataFromAPI();
+  }, [query]);
   return (
     <>
       <NavBar>
-        <SearchBar />
+        <SearchBar query={query} setQuery={setQuery} />
         <NumResaults movies={movies} />
       </NavBar>
       <Main>
-        <Box>
-          <MovieList movies={movies}></MovieList>
-        </Box>
+        {err ? (
+          <ErrorMessage message={err} />
+        ) : isLoading ? (
+          <Loader />
+        ) : (
+          <Box>
+            <MovieList movies={movies}></MovieList>
+          </Box>
+        )}
         <Box>
           <WatchedSummary watched={watched} />
           <WatchedList watched={watched} />
@@ -72,6 +130,17 @@ export default function App() {
   );
 }
 
+function Loader() {
+  return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>⛔️</span> {message}
+    </p>
+  );
+}
 function NavBar({ children }) {
   return (
     <nav className="nav-bar">
@@ -89,8 +158,7 @@ function Logo() {
     </div>
   );
 }
-function SearchBar() {
-  const [query, setQuery] = useState("");
+function SearchBar({ query, setQuery }) {
   return (
     <input
       className="search"
