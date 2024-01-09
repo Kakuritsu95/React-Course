@@ -1,0 +1,28 @@
+{
+  "cities": [
+    {
+      "cityName": "Smolyan",
+      "country": "Bulgaria",
+      "emoji": "🇧🇬",
+      "date": "2023-12-19T09:51:52.498Z",
+      "notes": "asdasd",
+      "position": {
+        "lat": "41.64392691863926",
+        "lng": "24.807815551757816"
+      },
+      "id": 10
+    },
+    {
+      "cityName": "Samothraki",
+      "country": "Greece",
+      "emoji": "🇬🇷",
+      "date": "2023-12-19T09:52:01.185Z",
+      "notes": "nice nudes",
+      "position": {
+        "lat": "40.43858586704331",
+        "lng": "25.609130859375004"
+      },
+      "id": 11
+    }
+  ]
+}
