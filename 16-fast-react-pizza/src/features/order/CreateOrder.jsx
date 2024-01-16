@@ -37,7 +37,7 @@ function CreateOrder() {
     ? totalCartPrice + totalCartPrice * 0.15
     : totalCartPrice;
   if (!cart.length) return <EmptyCart />;
-  console.log(position)
+  console.log(position);
   return (
     <div className="px-4 py-6">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
@@ -122,7 +122,7 @@ function CreateOrder() {
             name="position"
             value={
               position.latitude
-                ? `${(position.latitude)},${position.longitude}`
+                ? `${position.latitude},${position.longitude}`
                 : ''
             }
           />
@@ -151,11 +151,9 @@ export async function action({ request }) {
     errors.phone =
       'Please given us your correct phone number. we might need it to contact you...';
   if (Object.keys(errors).length > 0) return errors;
-    const newOrder = await createOrder(order);
-    //DO NOT OVERUSE!
-    console.log(order)
-    store.dispatch(clearCart());
-    return redirect(`/order/${newOrder.id}`);
-  
+  const newOrder = await createOrder(order);
+  //DO NOT OVERUSE!
+  store.dispatch(clearCart());
+  return redirect(`/order/${newOrder.id}`);
 }
 export default CreateOrder;
