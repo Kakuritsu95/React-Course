@@ -17,7 +17,7 @@ function Order() {
   useEffect(() => {
     if (!fetcher.data && fetcher.state === 'idle') fetcher.load('/menu');
   }, [fetcher]);
-  console.log(order);
+
   const {
     id,
     status,
