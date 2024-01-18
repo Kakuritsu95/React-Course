@@ -5,7 +5,7 @@ function UpdateOrder({ order }) {
   const fetcher = useFetcher();
   return (
     <fetcher.Form method="PATCH" className="text-right">
-      <Button type="pizzaId">Make priority</Button>
+      <Button type="primary">Make priority</Button>
       <input type="hidden" name="customer" value="Giannaros" />
     </fetcher.Form>
   );
